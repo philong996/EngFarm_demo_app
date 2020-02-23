@@ -3,27 +3,27 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 
-engine = create_engine('sqlite:///mymusic.db', echo=True)
+engine = create_engine('sqlite:///EngFarm.db', echo=True)
 Base = declarative_base()
 
-class Artist(Base):
-    __tablename__ = "artists"
+class User(Base):
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     name = Column(String)
     def __repr__(self):
         return "{}".format(self.name)
 
-class Album(Base):
+class Lesson(Base):
     """"""
-    __tablename__ = "albums"
+    __tablename__ = "lessons"
     id = Column(Integer, primary_key=True)
     title = Column(String)
     release_date = Column(String)
-    publisher = Column(String)
+    creator = Column(String)
     media_type = Column(String)
-    artist_id = Column(Integer, ForeignKey("artists.id"))
-    artist = relationship("Artist", backref=backref(
-        "albums", order_by=id))
+    user_id = Column(Integer, ForeignKey("user.id"))
+    user = relationship("user", backref=backref(
+        "lesson", order_by=id))
 
 
 # create tables
